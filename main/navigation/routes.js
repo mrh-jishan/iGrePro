@@ -1,14 +1,17 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../authContext';
+import RNDialog from '../pages/RNDialog';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
 
 const Routes = () => {
-    
-    const [loggedIn, setLoggedIN] = useState(true)
+
+    const { loggedIn, visible, message } = useContext(AuthContext);
 
     return (
         <NavigationContainer>
+            <RNDialog visible={visible} message={message} />
             {loggedIn ? <HomeStack /> : <AuthStack />}
         </NavigationContainer>
     )

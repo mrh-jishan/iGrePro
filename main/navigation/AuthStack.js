@@ -11,7 +11,7 @@ export default AuthStack = () => {
             <Stack.Screen
                 name="Home"
                 component={Home}
-                options={{ title: "Home", headerTitleStyle: { alignSelf: 'center' }, }} />
+                options={{ title: "Home" }} />
 
             <Stack.Screen
                 name="Login"

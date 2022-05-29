@@ -1,25 +1,28 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button, Dialog, Paragraph, Portal } from 'react-native-paper';
-import { hideMessage, showMessage } from '../redux/actions/modalAction';
+import { AuthContext } from './../authContext';
 
-class RNDialog extends Component {
-    render() {
-        return (
-            <Portal>
-                <Dialog visible={this.props.visible} onDismiss={this.props.hideMessage}>
-                    <Dialog.Title>Message</Dialog.Title>
-                    <Dialog.Content>
-                        <Paragraph>{this.props.message}</Paragraph>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button mode='contained' onPress={this.props.hideMessage}
-                            style={styles.button}>Done</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
-        )
-    }
+
+const RNDialog = ({ message, visible }) => {
+
+    const { toggleDialog } = useContext(AuthContext);
+
+    return (
+        <Portal>
+            <Dialog visible={visible} onDismiss={toggleDialog}>
+                <Dialog.Title>Message</Dialog.Title>
+
+                <Dialog.Content>
+                    <Paragraph>{message}</Paragraph>
+                </Dialog.Content>
+
+                <Dialog.Actions>
+                    <Button mode='contained' onPress={toggleDialog} style={styles.button}>Done</Button>
+                </Dialog.Actions>
+            </Dialog>
+        </Portal>
+    )
 }
 
 const styles = StyleSheet.create({
