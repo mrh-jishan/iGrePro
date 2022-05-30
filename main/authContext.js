@@ -52,11 +52,20 @@ export const ContextProvider = (props) => {
       }
     }).catch(err => {
       console.log("error in effect get data");
+      setLoggedIn(false)
     })
   }, [])
 
   return (
-    <AuthContext.Provider value={{ loggedIn, login, logout, toggleDialog, visible, message, token }}>
+    <AuthContext.Provider value={{
+      loggedIn,
+      login,
+      logout,
+      toggleDialog,
+      visible,
+      message,
+      token
+    }}>
       {props.children}
     </AuthContext.Provider>
   )

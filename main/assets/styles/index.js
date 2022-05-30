@@ -21,9 +21,18 @@ const DIMENSION_HEIGHT = Dimensions.get("window").height;
 
 export default StyleSheet.create({
 	container: {
-		display: 'flex',
-		flexDirection: 'column',
-		paddingHorizontal: 10,
+		// display: 'flex',
+		// flexDirection: 'column',
+		// paddingHorizontal: 10,
+		// alignItems: 'center',
+		// justifyContent: 'center',
+		// marginTop:19,
+		height: 250,
+		// width:188,
+		// backgroundColor:'#FFFFFF',
+		justifyContent: 'center',
+		marginLeft: 'auto',
+		marginRight: 'auto',
 	},
 	actionContainer: {
 		display: 'flex',
@@ -51,7 +60,7 @@ export default StyleSheet.create({
 		borderRadius: 8,
 		alignItems: "center", // for the card 
 		// margin: 0,
-		marginHorizontal:10,
+		marginHorizontal: 10,
 		shadowOpacity: 0.05,
 		shadowRadius: 10,
 		shadowColor: BLACK,
@@ -140,6 +149,13 @@ export default StyleSheet.create({
 	},
 	star: {
 		color: STAR_ACTIONS
+	},
+
+	face: {
+		backgroundColor: SECONDARY_COLOR,
+	},
+	back: {
+		backgroundColor: PRIMARY_COLOR,
 	},
 	like: {
 		fontSize: 25,
@@ -290,11 +306,34 @@ export default StyleSheet.create({
 		height: DIMENSION_HEIGHT
 	},
 	card: {
-		flex: 1,
 		backgroundColor: WHITE,
 		margin: 0,
 		padding: 15,
 		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: 300,
+		height: 300,
+	},
+	cardFace: {
+		backgroundColor: PRIMARY_COLOR,
+		margin: 0,
+		padding: 15,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: 300,
+		height: 300,
+	},
+	cardBack: {
+		backgroundColor: SECONDARY_COLOR,
+		margin: 0,
+		padding: 15,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: 300,
+		height: 300,
 	},
 	top: {
 		paddingTop: 15,

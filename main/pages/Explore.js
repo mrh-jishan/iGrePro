@@ -1,29 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, View } from 'react-native';
-import { Button, Card, Paragraph, Title } from 'react-native-paper';
+import { Text, View } from 'react-native';
+import FlipCard from 'react-native-flip-card';
+import SwipeCards from 'react-native-swipe-cards';
 import Api from '../Api';
 import styles from '../assets/styles';
+import { Background } from '../components';
+
+const Card = ({ base_word,translation }) => {
+  return (
+    <FlipCard
+      friction={6}
+      perspective={1000}
+      flipHorizontal={true}
+      flipVertical={false}
+      flip={false}
+      clickable={true}
+      onFlipEnd={(isFlipEnd) => { console.log('isFlipEnd', isFlipEnd) }}
+    >
+      <View style={styles.cardFace}>
+        <Text style={styles.walletText}>{base_word}</Text>
+      </View>
+      <View style={styles.cardBack}>
+        <Text style={styles.walletText}>{translation}</Text>
+      </View>
+    </FlipCard>
+  )
+}
 
 const Explore = () => {
 
-  const [quizzes, setQuizzes] = useState([])
-  const [idx, setIdx] = useState(0)
-  const [quizz, setQuizz] = useState({})
-  const [more, setMore] = useState(false)
-  const [less, setLess] = useState(false)
+  const [quizzes, setQuizzes] = useState([{ base_word: "test" }])
 
-  const nextQuizz = () => {
-    if (quizzes.length > (idx + 1)) {
-      setQuizz(quizzes[idx + 1])
-      setIdx(idx + 1)
-    }
+  const handleYup = (card) => {
+    console.log(`Yup for ${card}`)
   }
-
-  const prevQuizz = () => {
-    if (idx > 1) {
-      setQuizz(quizzes[idx - 1])
-      setIdx(idx - 1)
-    }
+  const handleNope = (card) => {
+    console.log(`Nope for ${card}`)
   }
 
   useEffect(() => {
@@ -31,32 +43,27 @@ const Explore = () => {
     Api.v1.quizz(1).then(res => {
       console.log("quiz exp: ", res.data);
       setQuizzes(res.data)
-      setQuizz(res.data[idx])
-      setLess(true)
-      if (res.data.length > 1) {
-        setMore(true)
-      }
     }).catch(err => {
       console.log("erro exp: ", err);
     })
   }, [])
 
   return (
-    <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg} >
+    <Background>
       <View style={styles.container}>
-        <Card>
-          <Card.Content>
-            <Title>{quizz.base_word}</Title>
-            <Paragraph>{quizz.translation}</Paragraph>
-          </Card.Content>
-
-          <Card.Actions>
-            <Button onPress={prevQuizz}>Prev</Button>
-            <Button onPress={nextQuizz}>Next</Button>
-          </Card.Actions>
-        </Card>
+        <SwipeCards
+          cards={quizzes}
+          renderCard={(cardData) => <Card {...cardData} />}
+          renderNoMoreCards={() => (
+            <View style={styles.card}>
+              <Text style={styles.title}>No more cards</Text>
+            </View>
+          )}
+          handleYup={handleYup}
+          handleNope={handleNope}
+        />
       </View>
-    </ImageBackground>
+    </Background>
   );
 };
 
