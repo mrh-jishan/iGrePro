@@ -20,10 +20,11 @@ export const ContextProvider = (props) => {
   }
 
   const login = async (body) => {
-    return await Api.v1.login(body).then(() => {
-      setLoggedIn(true)
+    return await Api.v1.login(body).then(async (res) => {
+      console.log("login response: ", res);
       const data = res.data
-      storeData(data)
+      await storeData(data)
+      setLoggedIn(true)
       return data
     }).catch(err => {
       setLoggedIn(false)

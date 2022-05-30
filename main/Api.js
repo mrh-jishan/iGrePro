@@ -3,7 +3,6 @@ import { getData } from './storage';
 
 const instance = axios.create({
     baseURL: 'https://igre-pro.herokuapp.com/api/v1',
-    timeout: 1000,
     headers: { 'Content-Type': 'application/json' }
 });
 
@@ -19,6 +18,7 @@ const headers = async () => {
 
 const login = async (body) => {
     const { data } = await instance.post('/sign_in', body)
+    console.log("login data-------: ", data);
     return data
 }
 

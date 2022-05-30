@@ -16,13 +16,7 @@ const Login = ({ navigation }) => {
             <Header>Welcome back.</Header>
             <Formik
                 initialValues={{ username: '', password: '' }}
-                onSubmit={(body) => {
-                    login(body).then(res => {
-                        console.log("res: -----", res);
-                    }).catch(err => {
-                        console.log("err----", err);
-                    })
-                }}
+                onSubmit={login}
                 validationSchema={yup.object().shape({
                     username: yup
                         .string()
