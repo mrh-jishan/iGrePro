@@ -1,35 +1,33 @@
-import React, { Component } from 'react';
-import { ImageBackground, View } from 'react-native';
-import Demo from '../assets/data/demo';
+import React, { useEffect, useState } from 'react';
+import { ImageBackground, Text, View } from 'react-native';
+import Api from '../Api';
 import styles from '../assets/styles';
-import { CardItem, CardStack } from './../components';
 
-class Explore extends Component {
+const Explore = () => {
 
-  render() {
-    return (
-      <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg} >
+  const [quizzes, setQuizzes] = useState([])
 
-        <View style={styles.containerHome}>
-          <CardStack
-            loop={true}
-            verticalSwipe={false}
-            renderNoMoreCards={() => null}
-            onSwipedLeft={() => console.log('onSwipedLeft')}
-            onSwipedRight={() => console.log('Swipe right')}
-          >
-            {Demo.map((item, index) => (
-              <CardItem
-                key={index}
-                quizz={item}
-              />
-            ))}
-          </CardStack>
+  useEffect(() => {
+    console.log("init here");
+    Api.v1.quizz(1).then(res => {
+      console.log("quiz exp: ", res.data);
+      setQuizzes(res.data)
+    }).catch(err => {
+      console.log("erro exp: ", err);
+    })
+  }, [])
 
-        </View>
-      </ImageBackground>
-    );
-  }
+  return (
+    <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg} >
+      <View style={styles.containerHome}>
+        {quizzes.map((item, index) => (
+          <View>
+            <Text>{item.base_word}</Text>
+          </View>
+        ))}
+      </View>
+    </ImageBackground>
+  );
 };
 
 export default Explore;

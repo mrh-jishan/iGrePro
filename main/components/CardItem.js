@@ -13,8 +13,6 @@ const CardItem = ({ quizz }) => {
           <Text style={styles.statusText}>{quizz.description}</Text>
         </View>
       )}
-
-
     </View>
   );
 };
