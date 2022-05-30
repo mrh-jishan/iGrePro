@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 const Background = ({ children }) => (
-  <ImageBackground source={require('../assets/images/background_dot.png')} resizeMode="repeat" style={styles.background} >
+  <ImageBackground source={require('../images/background_dot.png')} resizeMode="repeat" style={styles.background} >
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       {children}
     </KeyboardAvoidingView>

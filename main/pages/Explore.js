@@ -1,62 +1,74 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import FlipCard from 'react-native-flip-card';
+import { Button } from 'react-native-paper';
 import SwipeCards from 'react-native-swipe-cards';
 import Api from '../Api';
-import styles from '../assets/styles';
-import { Background } from '../components';
+import { Background, Paragraph } from '../components';
+import styles from '../styles';
 
-const Card = ({ base_word,translation }) => {
+const Card = ({ cardData, isFlip }) => {
   return (
     <FlipCard
       friction={6}
       perspective={1000}
       flipHorizontal={true}
       flipVertical={false}
-      flip={false}
+      flip={isFlip}
       clickable={true}
+      useNativeDriver={true}
       onFlipEnd={(isFlipEnd) => { console.log('isFlipEnd', isFlipEnd) }}
     >
       <View style={styles.cardFace}>
-        <Text style={styles.walletText}>{base_word}</Text>
+        <Paragraph style={styles.walletText}>{cardData.base_word}</Paragraph>
       </View>
       <View style={styles.cardBack}>
-        <Text style={styles.walletText}>{translation}</Text>
+        <Paragraph>{cardData.translation}</Paragraph>
+        <Text style={styles.title}>{cardData.synonym}</Text>
+        <Text style={styles.subTitle}>{cardData.description}</Text>
       </View>
     </FlipCard>
   )
 }
 
-const Explore = () => {
+const Explore = ({ navigation }) => {
 
   const [quizzes, setQuizzes] = useState([{ base_word: "test" }])
+  const [isFlip, setIsFlip] = useState(false)
+  const [planId, setPlanId] = useState(1)
 
   const handleYup = (card) => {
     console.log(`Yup for ${card}`)
+    setIsFlip(false)
   }
   const handleNope = (card) => {
     console.log(`Nope for ${card}`)
+    setIsFlip(false)
   }
 
   useEffect(() => {
     console.log("init here");
-    Api.v1.quizz(1).then(res => {
+    Api.v1.quizz(planId).then(res => {
       console.log("quiz exp: ", res.data);
       setQuizzes(res.data)
     }).catch(err => {
       console.log("erro exp: ", err);
     })
-  }, [])
+  }, [planId])
 
   return (
     <Background>
       <View style={styles.container}>
         <SwipeCards
+          useNativeDriver={true}
           cards={quizzes}
-          renderCard={(cardData) => <Card {...cardData} />}
+          renderCard={(cardData) => <Card cardData={cardData}
+            isFlip={isFlip}
+            setIsFlip={setIsFlip} />}
           renderNoMoreCards={() => (
             <View style={styles.card}>
-              <Text style={styles.title}>No more cards</Text>
+              <Text style={styles.inputext}>No more words</Text>
+              <Button onPress={() => navigation.navigate('Profile')}>Reset</Button>
             </View>
           )}
           handleYup={handleYup}

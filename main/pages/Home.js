@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Background, Button, Header, Logo, Paragraph } from '../components';
-import { gAuthInit } from '../redux/actions/authAction';
 
 class Home extends Component {
     render() {
@@ -16,7 +15,7 @@ class Home extends Component {
                 <Button mode="outlined"
                     onPress={() => navigation.navigate('Register')} > Sign Up</Button>
 
-               
+
             </Background>
         );
     }

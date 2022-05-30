@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AppInfo from '../pages/AppInfo';
-import { Explore, Faq, Profile } from './../pages';
+import { Explore, Profile, Words } from './../pages';
 
 const Tab = createBottomTabNavigator();
 
@@ -48,10 +48,10 @@ const MyTabs = () => {
                 }}
             />
             <Tab.Screen
-                name="Chat"
-                component={Faq}
+                name="Words"
+                component={Words}
                 options={{
-                    tabBarLabel: 'Chat',
+                    tabBarLabel: 'Words',
                     tabBarIcon: ({ color }) => (
                         <Icon name="envelope" color={color} size={20} />
                     ),
@@ -94,11 +94,6 @@ class AuthStack extends Component {
                     options={{ title: "Profile" }} />
 
                 <Stack.Screen
-                    name="Faq"
-                    component={Faq}
-                    options={{ title: "Faq" }} />
-
-                <Stack.Screen
                     name="AppInfo"
                     component={AppInfo}
                     options={{ title: "AppInfo" }} />
@@ -108,7 +103,6 @@ class AuthStack extends Component {
                     component={MyTabs}
                     options={{
                         title: "Home",
-                        headerLeft: () => { disabled: true },
                         headerTitleAlign: 'center'
                     }} />
 
