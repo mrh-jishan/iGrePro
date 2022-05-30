@@ -1,7 +1,6 @@
 export { default as Background } from './Background';
 export { default as BasicProfile } from './BasicProfile';
 export { default as Button } from './Button';
-export { default as CardItem } from './CardItem';
 export { default as DropDown } from './DropDown';
 export { default as Filter } from './Filters';
 export { default as Header } from './Header';

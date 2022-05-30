@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import Api from './Api';
-import { getData, storeData } from './storage';
+import { cleanToken, getData, storeData } from './storage';
 
 export const AuthContext = createContext(null);
 
@@ -12,13 +12,17 @@ export const ContextProvider = (props) => {
   const [token, setToken] = useState("")
 
   const logout = () => {
-    setLoggedIn(false)
+    cleanToken().then(res => {
+      setLoggedIn(false)
+    }).catch(err => {
+      setLoggedIn(false)
+    })
   }
 
-  const login = (body) => {
-    return Api.v1.login(body).then(res => {
+  const login = async (body) => {
+    return await Api.v1.login(body).then(() => {
       setLoggedIn(true)
-      const { data } = res.data
+      const data = res.data
       storeData(data)
       return data
     }).catch(err => {
@@ -29,7 +33,7 @@ export const ContextProvider = (props) => {
     })
   }
 
-  const register = (body) => {
+  const register = async (body) => {
     setLoggedIn(true)
   }
 
@@ -40,7 +44,7 @@ export const ContextProvider = (props) => {
 
   useEffect(() => {
     console.log("check login here from localhost");
-    getData("token").then(data => {
+    getData().then(data => {
       if (data) {
         setToken(data.token)
         setLoggedIn(true)

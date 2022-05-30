@@ -57,7 +57,7 @@ const MyTabs = () => {
 
             <Tab.Screen
                 name="Settings"
-                component={Explore}
+                component={AppInfo}
                 options={{
                     tabBarLabel: 'Settings',
                     tabBarIcon: ({ color }) => (
